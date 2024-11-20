@@ -1,0 +1,47 @@
+name: Run Build and Unit tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  main:
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+      fail-fast: false
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
+    steps:
+      - name: 📝 Fetch Sources 📝
+        uses: actions/checkout@v4
+
+      - name: 💡 Perform Common Steps 💡
+        uses: ./.github/workflows/perform-common-steps
+
+      - name: 🛠 Build Solution 🛠
+        shell: bash
+        run: dotnet nuke CompileAll
+
+      - name: 🚚 Publish Compiler Bundle 🚚
+        shell: bash
+        run: dotnet nuke PublishCompilerBundle
+
+      - name: 📦 Pack Compiler Bundle 📦
+        shell: bash
+        run: dotnet nuke PackCompilerBundle
+
+      - name: ✅ Run Unit Tests ✅
+        shell: bash
+        run: dotnet nuke TestAll

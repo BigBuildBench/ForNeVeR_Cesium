@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="ParserTests\verified\DeclarationParserTests.*.verified.txt">
+        <ParentFile>DeclarationParserTests</ParentFile>
+        <DependentUpon>DeclarationParserTests.cs</DependentUpon>
+      </None>
+      <None Update="ParserTests\FullParserTests.*.verified.txt">
+        <ParentFile>FullParserTests</ParentFile>
+        <DependentUpon>FullParserTests.cs</DependentUpon>
+      </None>
+      <None Update="ParserTests\StatementParserTests.*.verified.txt">
+        <ParentFile>StatementParserTests</ParentFile>
+        <DependentUpon>StatementParserTests.cs</DependentUpon>
+      </None>
+      <None Update="PreprocessorTests\verified\PreprocessorTests.*.txt">
+        <ParentFile>PreprocessorTests</ParentFile>
+        <DependentUpon>PreprocessorTests.cs</DependentUpon>
+      </None>
+    </ItemGroup>
+</Project>

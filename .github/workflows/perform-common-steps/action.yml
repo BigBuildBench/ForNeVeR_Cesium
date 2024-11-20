@@ -1,0 +1,23 @@
+name: "Perform common steps"
+description: "Performs common steps over the workflows"
+runs:
+  using: "composite"
+  steps:
+    - name: ⚙ Setup .NET SDK ⚙
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: global.json
+
+    - name: ♻ NuGet Cache ♻
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.NUGET_PACKAGES }}
+        key: ${{ runner.os }}.nuget.${{ hashFiles('**/*.csproj', 'Directory.Packages.props') }}
+
+    - name: 🛠️ Restore local .NET tools 🛠️
+      shell: bash
+      run: dotnet tool restore
+
+    - name: 🔄 Restore Nuget Packages 🔄
+      shell: bash
+      run: dotnet nuke RestoreAll

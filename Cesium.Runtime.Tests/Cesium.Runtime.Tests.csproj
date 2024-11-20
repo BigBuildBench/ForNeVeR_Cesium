@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <!--suppress MsbuildTargetFrameworkTagInspection -->
+        <TargetFrameworks>net8.0</TargetFrameworks>
+        <TargetFrameworks Condition=" $([MSBuild]::IsOsPlatform('Windows')) ">$(TargetFrameworks);net48</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+</Project>
